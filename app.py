@@ -1,15 +1,18 @@
 import account as acc
 from utils import *
 
-def app():
+def app() -> None:
 
     users = {}
     exit = False
    
     while not exit:
-        login = input("pls login: ")
+        login = input("Pls login: \nOr press e for exit program: ")
         
-        if login not in users:
+        if login == 'e':
+            exit = True
+        
+        elif login not in users:
             new_login = input("Invalid Input. Do you want to register?: [y/n]")
             print()
 
