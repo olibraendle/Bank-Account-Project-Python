@@ -1,10 +1,11 @@
 import account as acc
+from utils import *
 
 def app():
 
     users = {}
     exit = False
-    print(" dfssdfsdffworld")
+   
     while not exit:
         login = input("pls login: ")
         
@@ -28,7 +29,7 @@ def app():
             check_password = input("pls enter your password: ")
             user = users[login]
 
-            if user.password != check_password:
+            if not user.check_passwords(check_password):
                 print("sorry wrong password!")
                 print()
             else:
@@ -36,8 +37,8 @@ def app():
 
                 while not logout:
                     method = input(f"""
-                    Current Balance : {user.balance}
-                    Bank Account History: {user.account_history}
+                    Current Balance : {user.get_balance()}
+                    Bank Account History: {user.get_history()}
 
                     Diposit?: [d]
                     Withdrawal?: [w]
@@ -45,21 +46,27 @@ def app():
                     """)
                     print()
 
+
+                    # Diposit Function
                     if method == 'd':
                         amount = input("What amount do you want to deposit?: ")
-                        user.deposit(amount)
 
-                        print(f"New Account Balance: {user.balance}")
-                        print(f"Account History: {user.account_history}")
-                        print()
+                        if check_amount(amount):
+                            user.deposit(amount)
+                            print_accountstatus(user)
                     
+                    # Withdrawal function
                     elif method == 'w':
                         amount = input("What amount do you want to withdrawal?: ")
-                        user.withdrawal(amount)
-                        print(f"New Account Balance: {user.balance}")
-                        print(f"Account History: {user.account_history}")
-                        print()
+
+                        if check_amountwithdrawal(amount, user):
+                            user.withdrawal(amount)
+                            print_accountstatus(user)
                     
                     elif method == 'l':
                         logout = True
                         print("Logged out successfully")
+
+                    else:
+                        print("invalid input. Pls choose a method.")
+                        print()

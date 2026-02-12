@@ -1,5 +1,3 @@
-from utils import *
-
 
 class BankAccount:
 
@@ -8,39 +6,31 @@ class BankAccount:
         """initialize the user"""
 
         self.username = username
-        self.password = password
-        self.balance = 0
-        self.account_history = []
+        self.__password = password
+        self.__balance = 0
+        self.__account_history = []
         
         
+
+    def get_balance(self):
+        return self.__balance
+
+    def get_history(self):
+        return self.__account_history
+
 
     def deposit(self, amount):
-
-        if check_if_float(amount):
-            if float(amount) < 0:
-                print("Can't add negative amount. Pls add a correct amount.")
-                print()
-
-            else:
-                self.balance += float(amount)
-                self.account_history.append(self.balance)
-
-        else:
-            print("Pls add a number not a string.")
-            print()
+        self.__balance += float(amount)
+        self.__account_history.append(self.__balance)
 
 
     def withdrawal(self, amount):
+        self.__balance -= float(amount)
+        self.__account_history.append(self.__balance)
 
-        if check_if_float(amount):
-            if float(amount) > self.balance:
-                print("Withdrawal is too high for your balance.")
-                print()
 
-            else:
-                self.balance -= float(amount)
-                self.account_history.append(self.balance)
-
+    def check_passwords(self, string):
+        if string == self.__password:
+            return True
         else:
-            print("Pls add a number not a string.")
-            print()
+            return False
