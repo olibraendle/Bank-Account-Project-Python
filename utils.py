@@ -50,7 +50,18 @@ def check_amountwithdrawal(amount: str, user: BankAccount) -> bool:
 
 
 def print_accountstatus(user: BankAccount) -> None:
-
+    """this function currently only prints the user account balance"""
+    
     print(f"New Account Balance: {user.get_balance()}")
-    print(f"Account History: {user.get_history()}")
+    # print(f"Account History: {user.get_history()}")
     print()
+
+
+def print_history(user: BankAccount) -> None:
+    """this function prints the last user history"""
+
+    history = user.get_history()
+
+    print("History: \n")
+    for key, value in history.items():
+        print(f"{key} : {value}")

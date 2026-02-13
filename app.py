@@ -1,28 +1,34 @@
 import account as acc
 from utils import *
+from database import *
 
 def app() -> None:
 
-    users = {}
+    # users = {}
     exit = False
-   
+    
     while not exit:
         login = input("Pls login: \nOr press e for exit program: ")
         
         if login == 'e':
             exit = True
         
-        elif login not in users:
+        elif not db_userexistence(login):
             new_login = input("Invalid Input. Do you want to register?: [y/n]")
             print()
 
             if new_login == 'y':
                 username = input("Register your name: ")
+                fullname = input("Type in your full name: ")
+                address = input("Type in your address")
+                email = input("Type in your email")
                 password = input("Register new password: ")
                 print()
 
-                new_user = acc.BankAccount(username, password)
-                users.update({username : new_user})
+                new_user = acc.BankAccount(username, fullname, address,email,password)
+                db_insert(new_user)
+               
+
                 
             else:
                 check_exit = input("Do you want to exit the program?: [y/n]")
@@ -30,21 +36,20 @@ def app() -> None:
                     exit = True
         else:
             check_password = input("pls enter your password: ")
-            user = users[login]
 
-            if not user.check_passwords(check_password):
+            if not db_passwordcheck(login, check_password):
                 print("sorry wrong password!")
                 print()
             else:
                 logout = False
-
+                user = db_recreateObject(login)
                 while not logout:
                     method = input(f"""
                     Current Balance : {user.get_balance()}
-                    Bank Account History: {user.get_history()}
 
                     Diposit?: [d]
                     Withdrawal?: [w]
+                    History?: [h] 
                     Logout?:  [l]
                     """)
                     print()
@@ -56,6 +61,7 @@ def app() -> None:
 
                         if check_amount(amount):
                             user.deposit(amount)
+                            db_updatebalance(user)
                             print_accountstatus(user)
                     
                     # Withdrawal function
@@ -64,7 +70,12 @@ def app() -> None:
 
                         if check_amountwithdrawal(amount, user):
                             user.withdrawal(amount)
+                            db_updatebalance(user)
                             print_accountstatus(user)
+
+                    elif method == 'h':
+                        print_history(user)
+                    
                     
                     elif method == 'l':
                         logout = True
