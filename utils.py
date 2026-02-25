@@ -1,6 +1,7 @@
 from account import *
 import hashlib
 
+
 def check_float(amount: str) -> bool:
     """checks if input is really a float"""
 
@@ -8,11 +9,11 @@ def check_float(amount: str) -> bool:
         n = float(amount)
         return True
     except ValueError as e:
-        print(f"{e}. Pls input an invalid amount.")
+        print(f"{e}. Pls input a valid amount.")
         return False
 
 
-def check_amount(amount: str) -> float:
+def check_amount(amount: str) -> bool:
     """checks if the amount is in the right size"""
 
     if check_float(amount):
@@ -21,7 +22,7 @@ def check_amount(amount: str) -> float:
             return True
 
         else:
-            print("Amount can't be negative.")
+            # print("Amount can't be negative.")
             return False
 
     else:
@@ -34,11 +35,11 @@ def check_amountwithdrawal(amount: str, user: BankAccount) -> bool:
     if check_float(amount):
         amount = float(amount)
 
-        if amount >= 0 and not amount >= user.get_balance():
+        if 0 < amount <= user.get_balance():
             return True
 
         else:
-            print("Amount can't be negative or bigger than your account balance.")
+            # print("Amount can't be negative or bigger than your account balance.")
             return False
 
     else:
@@ -58,9 +59,13 @@ def print_history(user: BankAccount) -> None:
 
     history = user.get_history()
 
-    print("History: \n")
-    for key, value in history.items():
-        print(f"{key} : {value}")
+    # print("History: \n")
+    # for key, value in history.items():
+
+    #     history = 
+    #     return {key : value}
+
+    return history
 
 
 def hash_password(password: str):

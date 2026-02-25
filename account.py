@@ -11,8 +11,8 @@ class BankAccount:
         address: str,
         email: str,
         password: str,
-        balance=0,
-        account_history=dict({}),
+        balance: float = 0,
+        account_history: dict = None,
     ) -> None:
         """initialize the user"""
 
@@ -22,7 +22,7 @@ class BankAccount:
         self.__email = email
         self.__password = password
         self.__balance = balance
-        self.__account_history = account_history
+        self.__account_history = account_history if account_history is not None else {}
 
     def get_data_db(self) -> tuple:
         """return all the information about a user for the database"""
