@@ -1,6 +1,6 @@
 # Banking System — Learning Project
 
-A toy banking terminal app that evolves into a full web application, used as a vehicle to learn software layers from the ground up.
+A toy banking terminal app evolved into a full web application, used as a vehicle to learn software layers from the ground up.
 
 ## Goal
 
@@ -11,28 +11,54 @@ Each phase teaches a real concept. Nothing is skipped.
 
 ## Current State
 
-- Python terminal app
-- SQLite persistence via `sqlite3`
-- Basic account operations: deposit, withdrawal, history
+Phases 1–4 complete:
+
+- Python business logic with SQLite persistence
+- Full pytest test suite (unit + integration)
+- REST API built with Flask
+- Vanilla HTML/CSS/JS frontend
 
 ## Project Structure
 
 ```
 banking_system/
-├── account.py      # BankAccount model
-├── app.py          # Terminal UI / controller
-├── database.py     # SQLite persistence layer
-├── utils.py        # Validation and display helpers
-├── main.py         # Entry point
+├── account.py          # BankAccount model
+├── database.py         # SQLite persistence layer
+├── utils.py            # Validation and hashing helpers
+├── api.py              # Flask REST API + entry point
+├── templates/
+│   └── index.html      # Frontend HTML
+├── static/
+│   ├── style.css
+│   └── app.js          # Frontend logic (fetch API)
+├── tests/
+│   ├── conftest.py     # Shared fixtures
+│   ├── test_account.py
+│   ├── test_utils.py
+│   └── test_database.py
+├── old_files/          # Archived terminal UI (app.py, main.py)
 ├── README.md
 └── TODO.md
 ```
 
-## How to Run (Terminal)
+## How to Run
 
 ```bash
-python main.py
+python api.py
 ```
+
+Then open `http://127.0.0.1:5000/app` in your browser.
+
+## How to Run Tests
+
+```bash
+pytest
+```
+
+## Known Limitations
+
+- Sessions are in-memory (`active_sessions` dict) — tokens never expire and are lost on server restart. JWT planned for Phase 5.
+- Passwords hashed with SHA-256 — bcrypt planned for Phase 5.
 
 ## Learning Path
 
