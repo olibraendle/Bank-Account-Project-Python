@@ -132,6 +132,7 @@ def history():
 def frontend():
     return render_template("index.html")
 
+
 if __name__ == "__main__":
     db_init()
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)
